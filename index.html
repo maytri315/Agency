@@ -10,6 +10,8 @@
         body {
             margin: 0;
             overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
             background: #111;
             color: white;
             font-family: Arial, sans-serif;
@@ -18,8 +20,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100vh;
+            width: 100% !important;
+            height: 100vh !important;
             z-index: 1;
         }
         .overlay-container {
@@ -137,6 +139,7 @@
             font-size: 18px;
             font-weight: bold;
             transition: background 0.2s;
+            touch-action: manipulation;
         }
         .whatsapp-btn:hover {
             background: #e55a9f;
@@ -145,6 +148,7 @@
             position: relative;
             z-index: 5;
             background: rgba(0, 0, 0, 0.7);
+            padding: 20 Queenstown for mobile, tablet */
             padding: 20px;
             text-align: center;
         }
@@ -220,9 +224,10 @@
             position: relative;
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 10px;
+            padding: 0 5px;
             user-select: none;
             touch-action: pan-y;
+            overflow: hidden;
         }
         .carousel {
             display: flex;
@@ -274,6 +279,7 @@
             text-align: center;
             transition: background 0.2s;
             z-index: 2;
+            touch-action: manipulation;
         }
         .card-btn:hover {
             background: #e55a9f;
@@ -331,7 +337,7 @@
             transition: max-height 0.3s ease-out, padding 0.3s ease-out;
         }
         .faq-answer.active {
-            max-height: 200px;
+            max-height: 300px;
             padding: 15px 20px;
         }
         .faq-answer p {
@@ -363,10 +369,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .footer-container h1 {
-            font-family: ;
-            font-size : 36px;
-            margin-bottom : 20px;
-            color : #ffffff;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffffff;
         }
         .footer-grid {
             display: flex;
@@ -437,62 +442,67 @@
             font-size: 14px;
             color: rgba(255, 255, 255, 0.8);
         }
+        /* Media query for screens up to 768px */
         @media (max-width: 768px) {
             .overlay-text {
-                font-size: 32px;
-            }
-            .overlay-subtitle {
-                font-size: 16px;
-            }
-            .content h1, .portfolio h1, .services h1, .book-a-call h1, .faq h1, .footer-container h1 {
                 font-size: 28px;
             }
-            .content p, .card p, .project p, .book-a-call p, .faq-answer p {
+            .overlay-subtitle {
                 font-size: 14px;
+            }
+            .content h1, .portfolio h1, .services h1, .book-a-call h1, .faq h1, .footer-container h1 {
+                font-size: 24px;
+            }
+            .content p, .card p, .project p, .book-a-call p, .faq-answer p {
+                font-size: 13px;
             }
             .quote-text {
-                font-size: 18px;
+                font-size: 16px;
             }
             .quote-author {
-                font-size: 14px;
+                font-size: 12px;
             }
             .belt-text {
-                font-size: 20px;
+                font-size: 18px;
             }
             .card h2 {
-                font-size: 20px;
+                font-size: 18px;
             }
             .card img {
-                height: 150px;
+                height: 120px;
+                object-fit: cover;
             }
             .card {
-                padding: 20px;
+                padding: 15px;
             }
             .carousel-container {
-                padding: 0 10px;
+                padding: 0 5px;
+                overflow: hidden;
             }
             .card-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 18px;
-                line-height: 34px;
-                top: -17px;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+                line-height: 32px;
+                top: -16px;
+                touch-action: manipulation;
             }
             .project {
                 width: 100%;
                 margin: 10px 0;
+                min-width: unset;
             }
             .project img {
-                height: 120px;
+                height: 100px;
             }
             .project h2 {
-                font-size: 18px;
+                font-size: 16px;
             }
             .project:nth-child(1) {
-                transform: translateY(10px);
+                transform: translateY(5px);
             }
             .project:nth-child(2) {
-                transform: translateY(-5px);
+                transform: translateY(0);
                 margin-left: 0;
             }
             .project:nth-child(3) {
@@ -500,39 +510,108 @@
                 margin-left: 0;
             }
             .whatsapp-btn {
-                font-size: 16px;
-                padding: 10px 20px;
+                font-size: 14px;
+                padding: 8px 16px;
+                touch-action: manipulation;
             }
             .faq-question {
-                font-size: 18px;
-                padding: 12px 15px;
+                font-size: 16px;
+                padding: 10px 12px;
             }
             .faq-answer {
-                padding: 0 15px;
+                padding: 0 12px;
             }
             .faq-answer.active {
-                padding: 12px 15px;
+                padding: 10px 12px;
+                max-height: 300px;
             }
             .footer-container {
-                padding: 20px 15px;
+                padding: 15px 10px;
             }
             .contact-item {
-                font-size: 14px;
+                font-size: 13px;
             }
             .contact-item i {
-                font-size: 20px;
-                margin-right: 8px;
+                font-size: 18px;
+                margin-right: 6px;
             }
             .social-links a {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
             }
             .social-links i {
-                font-size: 20px;
+                font-size: 18px;
             }
             .copyright {
+                font-size: 11px;
+                margin-top: 10px;
+            }
+        }
+        /* Additional media query for very small screens (e.g., 320px–480px) */
+        @media (max-width: 480px) {
+            .overlay-text {
+                font-size: 24px;
+            }
+            .overlay-subtitle {
                 font-size: 12px;
-                margin-top: 15px;
+            }
+            .content h1, .portfolio h1, .services h1, .book-a-call h1, .faq h1, .footer-container h1 {
+                font-size: 20px;
+            }
+            .content p, .card p, .project p, .book-a-call p, .faq-answer p {
+                font-size: 12px;
+            }
+            .quote-text {
+                font-size: 14px;
+            }
+            .quote-author {
+                font-size: 11px;
+            }
+            .belt-text {
+                font-size: 16px;
+            }
+            .card h2 {
+                font-size: 16px;
+            }
+            .card img {
+                height: 100px;
+            }
+            .card {
+                padding: 12px;
+            }
+            .card-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+                line-height: 28px;
+                top: -14px;
+            }
+            .project img {
+                height: 80px;
+            }
+            .project h2 {
+                font-size: 14px;
+            }
+            .whatsapp-btn {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+            .faq-question {
+                font-size: 14px;
+                padding: 8px 10px;
+            }
+            .faq-answer.active {
+                padding: 8px 10px;
+            }
+            .contact-item {
+                font-size: 12px;
+            }
+            .social-links a {
+                width: 28px;
+                height: 28px;
+            }
+            .social-links i {
+                font-size: 16px;
             }
         }
     </style>
@@ -575,7 +654,7 @@
         <div class="portfolio-container">
             <div class="project">
                 <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=60" alt="NGO Website" loading="lazy">
-                <h2>NGO Website</h2>
+                <h2>NGO Website416</h2>
                 <p>Built a mobile-friendly site for a local NGO, boosting donations by 30%.</p>
             </div>
             <div class="project">
@@ -747,8 +826,9 @@
         // Scene setup
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Optimize for high-DPI displays
         document.body.appendChild(renderer.domElement);
 
         // Create 3D text geometry for 'M'
@@ -807,6 +887,7 @@
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             }, false);
         }, undefined, () => {
             console.error('Failed to load font for 3D text.');
@@ -829,7 +910,6 @@
         let currentIndex = 0;
 
         function updateCarousel() {
-            // Normalize index for looping
             currentIndex = (currentIndex + totalCards) % totalCards;
             carousel.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
             carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -841,10 +921,10 @@
                 btn.textContent = '';
                 if (index === currentIndex) {
                     btn.style.display = 'block';
-                    btn.textContent = '❯'; // Right arrow for current card
+                    btn.textContent = '❯';
                 } else if (index === (currentIndex - 1 + totalCards) % totalCards) {
                     btn.style.display = 'block';
-                    btn.textContent = '❮'; // Left arrow for previous card
+                    btn.textContent = '❮';
                 }
             });
         }
@@ -950,7 +1030,6 @@
                 const answer = question.nextElementSibling;
                 const isActive = answer.classList.contains('active');
 
-                // Close all other answers
                 document.querySelectorAll('.faq-answer').forEach(ans => {
                     ans.classList.remove('active');
                     ans.style.maxHeight = null;
@@ -959,7 +1038,6 @@
                     q.classList.remove('active');
                 });
 
-                // Toggle current answer
                 if (!isActive) {
                     answer.classList.add('active');
                     answer.style.maxHeight = answer.scrollHeight + 'px';
@@ -967,12 +1045,10 @@
                 }
             });
 
-            // Support touch events for mobile
             question.addEventListener('touchstart', () => {
                 const answer = question.nextElementSibling;
                 const isActive = answer.classList.contains('active');
 
-                // Close all other answers
                 document.querySelectorAll('.faq-answer').forEach(ans => {
                     ans.classList.remove('active');
                     ans.style.maxHeight = null;
@@ -981,7 +1057,6 @@
                     q.classList.remove('active');
                 });
 
-                // Toggle current answer
                 if (!isActive) {
                     answer.classList.add('active');
                     answer.style.maxHeight = answer.scrollHeight + 'px';

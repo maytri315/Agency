@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotating 3D Pink Metallic M with Enhanced Carousel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+        }
+        .overlay-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            transition: transform 0.1s ease-out;
+        }
+        .overlay-text {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+        .overlay-subtitle {
+            color: #ff69b4;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            margin-top: 5px;
+            pointer-events: none;
+        }
+        .content {
+            position: relative;
+            z-index: 5;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            margin-top: 100vh;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .content p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        .quote {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 105, 180, 0.2);
+            border-left: 4px solid #ff69b4;
+            text-align: left;
+        }
+        .quote-text {
+            font-size: 20px;
+            font-style: italic;
+            margin: 0 0 10px;
+        }
+        .quote-author {
+            font-size: 16px;
+            color: #ccc;
+            text-align: right;
+        }
+        .moving-belt {
+            position: relative;
+            z-index: 5;
+            background: #ff69b4;
+            padding: 5px 0;
+            margin: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+        .belt-text {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            animation: marquee 8s linear infinite;
+            padding-right: 100vw;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+        .book-a-call {
+            position: relative;
+            z-index: 5;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .book-a-call h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .book-a-call p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            color: white;
+        }
+        .whatsapp-btn {
+            display: inline-block;
+            background: #ff69b4;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .whatsapp-btn:hover {
+            background: #e55a9f;
+        }
+        .portfolio {
+            position: relative;
+            z-index: 5;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+        .portfolio h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .portfolio-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+        .project {
+            width: 33%;
+            background: rgba(255, 105, 180, 0.2);
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 15px;
+            text-align: left;
+            box-sizing: border-box;
+            transition: transform 0.2s;
+        }
+        .project:hover {
+            transform: scale(1.05);
+        }
+        .project:nth-child(1) {
+            transform: translateY(20px);
+        }
+        .project:nth-child(2) {
+            transform: translateY(-15px);
+            margin-left: 30px;
+        }
+        .project:nth-child(3) {
+            transform: translateY(10px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .project img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ff69b4;
+            margin-bottom: 10px;
+        }
+        .project h2 {
+            font-size: 20px;
+            color: #ff69b4;
+            margin-bottom: 10px;
+        }
+        .project p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .services {
+            position: relative;
+            z-index: 5;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            min-height: 10vh;
+            text-align: center;
+        }
+        .services h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 10px;
+            user-select: none;
+            touch-action: pan-y;
+        }
+        .carousel {
+            display: flex;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card {
+            position: relative;
+            flex: 0 0 100%;
+            background: rgba(255, 105, 180, 0.2);
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 0;
+            text-align: left;
+            box-sizing: border-box;
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ff69b4;
+            margin-bottom: 15px;
+        }
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ff69b4;
+        }
+        .card p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .card-btn {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff69b4;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 40px;
+            text-align: center;
+            transition: background 0.2s;
+            z-index: 2;
+        }
+        .card-btn:hover {
+            background: #e55a9f;
+        }
+        .faq {
+            position: relative;
+            z-index: 5;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .faq h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+            border: 2px solid #ff69b4;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 105, 180, 0.2);
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            transition: background 0.2s;
+        }
+        .faq-question:hover {
+            background: #e55a9f;
+        }
+        .faq-question i {
+            color: #ff69b4;
+            transition: transform 0.3s;
+        }
+        .faq-question.active i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            padding: 0 20px;
+            background: rgba(255, 105, 180, 0.2);
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 15px 20px;
+        }
+        .faq-answer p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            color: white;
+        }
+        footer {
+            position: relative;
+            z-index: 5;
+            background: #ff69b4;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+        .footer-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px 20px;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .footer-container h1 {
+            font-family: ;
+            font-size : 36px;
+            margin-bottom : 20px;
+            color : #ffffff;
+        }
+        .footer-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 15px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+        }
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+        .contact-item a:hover {
+            color: #e55a9f;
+            text-decoration: underline;
+        }
+        .contact-item i {
+            color: #ff69b4;
+            font-size: 24px;
+            margin-right: 10px;
+            transition: color 0.2s;
+        }
+        .contact-item a:hover i {
+            color: #e55a9f;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px auto;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #ff69b4;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .social-links a:hover {
+            background: #e55a9f;
+            transform: scale(1.1);
+        }
+        .social-links i {
+            color: white;
+            font-size: 24px;
+        }
+        .copyright {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        @media (max-width: 768px) {
+            .overlay-text {
+                font-size: 32px;
+            }
+            .overlay-subtitle {
+                font-size: 16px;
+            }
+            .content h1, .portfolio h1, .services h1, .book-a-call h1, .faq h1, .footer-container h1 {
+                font-size: 28px;
+            }
+            .content p, .card p, .project p, .book-a-call p, .faq-answer p {
+                font-size: 14px;
+            }
+            .quote-text {
+                font-size: 18px;
+            }
+            .quote-author {
+                font-size: 14px;
+            }
+            .belt-text {
+                font-size: 20px;
+            }
+            .card h2 {
+                font-size: 20px;
+            }
+            .card img {
+                height: 150px;
+            }
+            .card {
+                padding: 20px;
+            }
+            .carousel-container {
+                padding: 0 10px;
+            }
+            .card-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 18px;
+                line-height: 34px;
+                top: -17px;
+            }
+            .project {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .project img {
+                height: 120px;
+            }
+            .project h2 {
+                font-size: 18px;
+            }
+            .project:nth-child(1) {
+                transform: translateY(10px);
+            }
+            .project:nth-child(2) {
+                transform: translateY(-5px);
+                margin-left: 0;
+            }
+            .project:nth-child(3) {
+                transform: translateY(5px);
+                margin-left: 0;
+            }
+            .whatsapp-btn {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+            .faq-question {
+                font-size: 18px;
+                padding: 12px 15px;
+            }
+            .faq-answer {
+                padding: 0 15px;
+            }
+            .faq-answer.active {
+                padding: 12px 15px;
+            }
+            .footer-container {
+                padding: 20px 15px;
+            }
+            .contact-item {
+                font-size: 14px;
+            }
+            .contact-item i {
+                font-size: 20px;
+                margin-right: 8px;
+            }
+            .social-links a {
+                width: 32px;
+                height: 32px;
+            }
+            .social-links i {
+                font-size: 20px;
+            }
+            .copyright {
+                font-size: 12px;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay-container" id="agency-text">
+        <div class="overlay-text">agency</div>
+        <div class="overlay-subtitle">Your Digital Partner</div>
+    </div>
+    <div class="content">
+        <h1>Why Your Business Needs a Website</h1>
+        <p>In today's digital age, a website is the cornerstone of any successful business. It serves as your online storefront, accessible 24/7 to customers worldwide.</p>
+        <div class="quote">
+            <p class="quote-text">“In the information age, build a website before you build a workplace.”</p>
+            <p class="quote-author">— Amit Kalantri</p>
+        </div>
+        <p>A professional website builds credibility, showcases your products or services, and helps you stand out from competitors. It’s a platform to tell your brand’s story and connect with your audience.</p>
+        <div class="quote">
+            <p class="quote-text">“Websites promote you 24/7: No employee will do that.”</p>
+            <p class="quote-author">— Paul Cookson</p>
+        </div>
+        <p>With a website, you can leverage search engine optimization (SEO) to attract organic traffic, integrate e-commerce for seamless sales, and use analytics to understand customer behavior.</p>
+        <div class="quote">
+            <p class="quote-text">“A website is a window through which your business says hello to the world.”</p>
+            <p class="quote-author">— Amit Kalantri</p>
+        </div>
+        <p>Moreover, a website enables you to engage customers through blogs, contact forms, and social media integration, fostering loyalty and trust.</p>
+        <div class="quote">
+            <p class="quote-text">“Create a website that expresses something about who you are that won’t fit into the template available to you on a social networking site.”</p>
+            <p class="quote-author">— Jaron Lanier</p>
+        </div>
+        <p>Don’t miss out on opportunities. A well-designed website is an investment that drives growth, enhances visibility, and ensures your business thrives in the digital marketplace.</p>
+    </div>
+    <div class="moving-belt">
+        <span class="belt-text">Work with us</span>
+        <span class="belt-text">Work with us</span>
+    </div>
+    <div class="portfolio">
+        <h1>Our Work</h1>
+        <div class="portfolio-container">
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=60" alt="NGO Website" loading="lazy">
+                <h2>NGO Website</h2>
+                <p>Built a mobile-friendly site for a local NGO, boosting donations by 30%.</p>
+            </div>
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=60" alt="E-commerce Platform" loading="lazy">
+                <h2>E-commerce Platform</h2>
+                <p>Designed a sleek online store with secure payments for a retail brand.</p>
+            </div>
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1611162617210-7d673bf0f2a1?auto=format&fit=crop&w=800&q=60" alt="Social Media Campaign" loading="lazy">
+                <h2>Social Media Campaign</h2>
+                <p>Crafted a viral campaign, growing engagement by 50% for a startup.</p>
+            </div>
+        </div>
+    </div>
+    <div class="services">
+        <h1>What We Offer</h1>
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=60" alt="Website Design" loading="lazy">
+                    <h2>Custom Website Design</h2>
+                    <p>We create custom, user-friendly websites tailored to your brand’s unique needs, ensuring a professional and engaging online presence.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1611926653458-09294b356b47?auto=format&fit=crop&w=800&q=60" alt="SEO Graph" loading="lazy">
+                    <h2>Search Engine Optimization (SEO)</h2>
+                    <p>Boost your visibility with our SEO services, designed to drive organic traffic and improve your rankings on major search engines.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1507238691740-903d9b483d86?auto=format&fit=crop&w=800&q=60" alt="Digital Marketing" loading="lazy">
+                    <h2>Digital Marketing</h2>
+                    <p>Engage your audience through targeted campaigns, including social media management, content creation, and email marketing.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1556742502-ec0dd248d7fa?auto=format&fit=crop&w=800&q=60" alt="E-commerce" loading="lazy">
+                    <h2>E-commerce Solutions</h2>
+                    <p>Sell products online seamlessly with our secure payment systems and intuitive user interfaces for your e-commerce platform.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=60" alt="Analytics Dashboard" loading="lazy">
+                    <h2>Website Maintenance & Analytics</h2>
+                    <p>Partner with us for ongoing maintenance and analytics, keeping your site up-to-date and providing insights into customer behavior.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=60" alt="UI/UX Interface" loading="lazy">
+                    <h2>UI/UX Design</h2>
+                    <p>Craft intuitive, user-centered interfaces with our UI/UX design services, ensuring seamless navigation and stunning visuals tailored to your audience.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=60" alt="Content Writing" loading="lazy">
+                    <h2>Content Creation</h2>
+                    <p>Elevate your brand with compelling content, including blog posts, website copy, and visuals, designed to engage visitors and boost SEO performance.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1551650977-0b553c7b4b4e?auto=format&fit=crop&w=800&q=60" alt="Mobile App" loading="lazy">
+                    <h2>Mobile App Development</h2>
+                    <p>Build responsive, high-performance mobile apps for iOS and Android, tailored to your business needs, with sleek designs and robust functionality.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=60" alt="Branding Mood Board" loading="lazy">
+                    <h2>Branding & Graphic Design</h2>
+                    <p>Create a cohesive brand identity with custom logos, color schemes, and graphics that reflect your vision and captivate your audience.</p>
+                </div>
+                <div class="card">
+                    <button class="card-btn">❯</button>
+                    <img src="https://images.unsplash.com/photo-1611162617210-7d673bf0f2a1?auto=format&fit=crop&w=800&q=60" alt="Social Media Dashboard" loading="lazy">
+                    <h2>Social Media Strategy</h2>
+                    <p>Grow your online presence with tailored social media plans, including content scheduling, analytics, and campaigns to engage your target audience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="book-a-call">
+        <h1>Book a Call</h1>
+        <p>Ready to take your digital presence to the next level? Contact us via WhatsApp to schedule a free consultation with our experts.</p>
+        <a href="https://wa.me/+1234567890?text=Hi,%20I%27d%20like%20to%20book%20a%20call%20to%20discuss%20my%20project!" class="whatsapp-btn" target="_blank">Schedule Now</a>
+    </div>
+    <div class="faq">
+        <h1>Frequently Asked Questions</h1>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">How long does it take to build a website?<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    <p>The timeline depends on the project’s complexity. A simple website can take 2–4 weeks, while larger projects, like e-commerce platforms, may take 6–12 weeks. We’ll provide a detailed timeline during our consultation.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What is included in your SEO services?<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    <p>Our SEO services include keyword research, on-page optimization, content strategy, link building, and performance tracking to boost your site’s visibility and rankings on search engines.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Do you offer ongoing website maintenance?<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    <p>Yes, we provide maintenance packages that include updates, security monitoring, backups, and analytics reporting to keep your website running smoothly and securely.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How much does a custom website cost?<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    <p>Costs vary based on features, design complexity, and functionality. We offer tailored quotes after discussing your needs. Contact us for a free consultation to get started.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can you help with social media marketing?<i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    <p>Absolutely! We create customized social media strategies, including content creation, scheduling, and analytics, to grow your audience and engagement across platforms.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <h1>Contact Us</h1>
+            <div class="footer-grid">
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <a href="mailto:yourname@gmail.com">
+                            <i class="fas fa-envelope"></i> yourname@gmail.com
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="tel:+1234567890">
+                            <i class="fas fa-phone"></i> +1234567890
+                        </a>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/YourAgencyInsta" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.twitter.com/YourAgencyX" target="_blank">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/YourAgencyLinkedIn" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.facebook.com/YourAgencyFB" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">© 2025 Your Agency. All rights reserved.</div>
+        </div>
+    </footer>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.module.min.js",
+                "three/examples/jsm/": "https://unpkg.com/three@0.134.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+        import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Create 3D text geometry for 'M'
+        const loader = new FontLoader();
+        loader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', function (font) {
+            const textGeometry = new TextGeometry('M', {
+                font: font,
+                size: 5,
+                height: 1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.2,
+                bevelSize: 0.1,
+                bevelOffset: 0,
+                bevelSegments: 5
+            });
+
+            // Center the geometry
+            textGeometry.computeBoundingBox();
+            const textWidth = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
+            const textHeight = textGeometry.boundingBox.max.y - textGeometry.boundingBox.min.y;
+            textGeometry.translate(-textWidth / 2, -textHeight / 2, 0);
+
+            // Pink metallic material
+            const metalMaterial = new THREE.MeshStandardMaterial({
+                color: 0xff69b4,
+                metalness: 0.9,
+                roughness: 0.4,
+                envMapIntensity: 1.0
+            });
+
+            const textMesh = new THREE.Mesh(textGeometry, metalMaterial);
+            scene.add(textMesh);
+
+            // Lighting
+            const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+            pointLight.position.set(10, 10, 10);
+            scene.add(pointLight);
+
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+
+            // Camera position
+            camera.position.z = 10;
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                textMesh.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }, false);
+        }, undefined, () => {
+            console.error('Failed to load font for 3D text.');
+        });
+
+        // Scroll effect for agency text
+        const agencyText = document.getElementById('agency-text');
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            const translateY = -scrollY * 0.5;
+            agencyText.style.transform = `translate(-50%, calc(-50% + ${translateY}px))`;
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Carousel functionality
+        const carousel = document.querySelector('.carousel');
+        const carouselContainer = document.querySelector('.carousel-container');
+        const cards = document.querySelectorAll('.card');
+        const totalCards = cards.length;
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            // Normalize index for looping
+            currentIndex = (currentIndex + totalCards) % totalCards;
+            carousel.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // Update button text and position
+            const buttons = document.querySelectorAll('.card-btn');
+            buttons.forEach((btn, index) => {
+                btn.style.display = 'none';
+                btn.textContent = '';
+                if (index === currentIndex) {
+                    btn.style.display = 'block';
+                    btn.textContent = '❯'; // Right arrow for current card
+                } else if (index === (currentIndex - 1 + totalCards) % totalCards) {
+                    btn.style.display = 'block';
+                    btn.textContent = '❮'; // Left arrow for previous card
+                }
+            });
+        }
+
+        // Single button click handler
+        document.querySelectorAll('.card-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isRight = btn.textContent === '❯';
+                currentIndex = isRight ? currentIndex + 1 : currentIndex - 1;
+                updateCarousel();
+            }, false);
+        });
+
+        // Swipe functionality with enhanced scrollability
+        let startX = 0;
+        let startTime = 0;
+        let isDragging = false;
+        let currentTranslate = 0;
+        let velocity = 0;
+        const threshold = 20;
+        const momentumThreshold = 0.3;
+
+        function handleStart(x, time) {
+            startX = x;
+            startTime = time;
+            isDragging = true;
+            currentTranslate = -currentIndex * 100;
+            carousel.style.transition = 'none';
+        }
+
+        function handleMove(x) {
+            if (!isDragging) return;
+            const deltaX = x - startX;
+            const overscroll = deltaX * 0.7;
+            carousel.style.transform = `translateX(${currentTranslate + overscroll / window.innerWidth * 100}%)`;
+        }
+
+        function handleEnd(x, time) {
+            if (!isDragging) return;
+            isDragging = false;
+            carousel.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
+
+            const deltaX = x - startX;
+            const deltaTime = time - startTime || 1;
+            velocity = deltaX / deltaTime;
+
+            let newIndex = currentIndex;
+            if (Math.abs(deltaX) > threshold || Math.abs(velocity) > momentumThreshold) {
+                if (deltaX > 0) {
+                    newIndex--;
+                } else {
+                    newIndex++;
+                }
+            }
+
+            currentIndex = newIndex;
+            updateCarousel();
+        }
+
+        // Mouse events
+        carouselContainer.addEventListener('mousedown', (e) => {
+            handleStart(e.clientX, performance.now());
+            e.preventDefault();
+        }, false);
+
+        carouselContainer.addEventListener('mousemove', (e) => {
+            handleMove(e.clientX);
+        }, false);
+
+        carouselContainer.addEventListener('mouseup', (e) => {
+            handleEnd(e.clientX, performance.now());
+        }, false);
+
+        carouselContainer.addEventListener('mouseleave', () => {
+            if (isDragging) {
+                carousel.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
+                updateCarousel();
+                isDragging = false;
+            }
+        }, false);
+
+        // Touch events
+        carouselContainer.addEventListener('touchstart', (e) => {
+            handleStart(e.touches[0].clientX, performance.now());
+        }, { passive: true });
+
+        carouselContainer.addEventListener('touchmove', (e) => {
+            handleMove(e.touches[0].clientX);
+            e.preventDefault();
+        }, { passive: false });
+
+        carouselContainer.addEventListener('touchend', (e) => {
+            handleEnd(e.changedTouches[0].clientX, performance.now());
+        }, { passive: true });
+
+        // Initialize carousel
+        updateCarousel();
+
+        // FAQ accordion functionality
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = answer.classList.contains('active');
+
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.classList.remove('active');
+                    ans.style.maxHeight = null;
+                });
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                });
+
+                // Toggle current answer
+                if (!isActive) {
+                    answer.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    question.classList.add('active');
+                }
+            });
+
+            // Support touch events for mobile
+            question.addEventListener('touchstart', () => {
+                const answer = question.nextElementSibling;
+                const isActive = answer.classList.contains('active');
+
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.classList.remove('active');
+                    ans.style.maxHeight = null;
+                });
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                });
+
+                // Toggle current answer
+                if (!isActive) {
+                    answer.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    question.classList.add('active');
+                }
+            }, { passive: true });
+        });
+    </script>
+</body>
+</html>
